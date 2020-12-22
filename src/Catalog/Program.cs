@@ -6,7 +6,7 @@ namespace Catalog
     /// <summary>
     /// 
     /// </summary>
-    public class Program
+    public static class Program
     {
         /// <summary>
         /// 
@@ -22,7 +22,7 @@ namespace Catalog
         /// </summary>
         /// <param name="args"></param>
         /// <returns></returns>
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
+        private static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

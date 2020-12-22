@@ -35,6 +35,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Webshop.Shared.Ddd\Webshop.Shared.Ddd.csproj" />
+    <ProjectReference Include="..\Webshop.Shared.Infrastructure.Consul\Webshop.Shared.Infrastructure.Consul.csproj" />
     <ProjectReference Include="..\Webshop.Shared\Webshop.Shared.csproj" />
   </ItemGroup>
 
@@ -46,10 +47,6 @@
     <None Update="..\.dockerignore">
       <DependentUpon>dockerfile</DependentUpon>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Application\Products\Events\" />
   </ItemGroup>
 
 

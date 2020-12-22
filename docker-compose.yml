@@ -1,0 +1,157 @@
+version: "3.8"
+
+services:
+  # Infrastructure services
+  consul:
+    #container_name: consul
+    image: consul:latest
+    ports:
+        - "8500:8500"
+        - "8300:8300"
+    networks:
+      - webshop
+    volumes:
+    - ./deploy/compose/consul/config:/config
+    - ./deploy/compose/consul/_data/consul:/data
+    command: 'agent -config-dir=/config -bind ''{{ GetPrivateInterfaces | attr "address" }}'' -client ''{{ GetPrivateInterfaces | attr "address" }}'' -bootstrap'
+    # depends_on:
+    #   - dps
+    # dns:
+    #   - 10.0.0.10
+  # consul-agent:
+  #   image: 'consul:latest'
+  #   hostname: consul-agent
+  #   container_name: consul-agent
+  #   command: 'agent -join consul -config-dir=/config -bind ''{{ GetPrivateInterfaces | attr "address" }}'' -client ''{{ GetPrivateInterfaces | attr "address" }}'''
+  #   volumes:
+  #   - ./deploy/compose/consul-agent/config:/config
+  #   - ./deploy/compose/consul-agent/_data/consul:/data
+  #   networks:
+  #     - webshop
+  #   depends_on:
+  #     - consul
+
+  sqlserverdb:
+    image: mcr.microsoft.com/mssql/server:latest
+    environment:
+      SA_PASSWORD: "Password_123"
+      ACCEPT_EULA: "Y"
+    container_name: "sqlserverdb"
+    user: root # required when docker-host is on windows
+    networks:
+      - webshop
+    volumes:
+      - mssql-server-linux-data:/var/opt/mssql/data
+    ports:
+      - "1433:1433"
+
+  portainer:
+    image: portainer/portainer
+    ports:
+      - "9000:9000"
+      - "8000:8000"
+    volumes:
+      - portainer:/data
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - webshop
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq
+
+  # dps:
+  #   image: defreitas/dns-proxy-server
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   environment:
+  #     - MG_LOG_LEVEL=ERROR
+  #     - MG_REGISTER_CONTAINER_NAMES=1
+  #   hostname: dns.microservices
+  #   networks:
+  #     webshop:
+  #       ipv4_address: 10.1.0.10
+
+  # prometheus:
+  #   image: prom/prometheus
+  #   container_name: prometheus
+  #   ports:
+  #     - "9091:9090"
+  #   networks:
+  #     - webshop
+  #   # network_mode: host
+  #   volumes:
+  #     - prometheus:/prometheus
+  #   #   - ${PWD}/prometheus.yml:/etc/prometheus/prometheus.yml
+
+  # Business services
+  catalog:
+    image: catalog:latest
+    build:
+      context: ./
+      dockerfile: Catalog/Dockerfile
+    #container_name: catalog
+    #hostname: catalog
+    deploy:
+      replicas: 2
+    environment:
+      - CONSUL_HTTP_ADDR=webshop_consul_1:8500
+      - ConnectionStrings:CatalogDbContext=Server=sqlserverdb,1433;Database=Catalog;User Id=sa;Password=Password_123;MultipleActiveResultSets=true
+      - ServiceDiscovery:Enabled=true
+      - ServiceDiscovery:SelfRegistration=true
+      - ServiceDiscovery:Datacenter=webshop-dc
+      - ServiceDiscovery:ServiceName=Catalog
+      - ServiceDiscovery:Port=80
+      - ServiceDiscovery:Tags:0=testing
+      - ServiceDiscovery:WaitTime=30
+    ports:
+      - 80
+    networks:
+      webshop:
+        # ipv4_address: 10.1.0.100
+    # dns:
+    #   - 10.1.0.10
+  # catalog-sidecar:
+  #   image: 'nicholasjackson/consul-envoy:v1.8.3-v1.14.4'
+  #   container_name: catalog-sidecar
+  #   environment:
+  #     CONSUL_HTTP_ADDR: 'consul:8500'
+  #     CONSUL_GRPC_ADDR: 'consul:8502'
+  #     SERVICE_CONFIG: /config/catalog.json
+  #     CENTRAL_CONFIG: /central_config/catalog-defaults.hcl
+  #   volumes:
+  #     - './deploy/compose/service_config:/config'
+  #     - './deploy/compose/central_config:/central_config'
+  #   command:
+  #     - consul
+  #     - connect
+  #     - envoy
+  #     - '-sidecar-for'
+  #     - catalog-v1
+  #   depends_on:
+  #     - consul
+  #   network_mode: 'service:catalog'
+
+
+networks:
+  webshop:
+    name: webshop
+    driver: bridge
+    # ipam:
+    #   config:
+    #     - subnet: 10.1.0.0/24
+
+volumes:
+  mssql-server-linux-data:
+    driver: local
+  rabbitmq:
+    driver: local
+  portainer:
+    driver: local
+  prometheus:
+    driver: local
