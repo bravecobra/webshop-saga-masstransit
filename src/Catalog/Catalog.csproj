@@ -30,12 +30,17 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
+    <PackageReference Include="System.Collections.Immutable" Version="5.0.0" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Webshop.Shared.Ddd\Webshop.Shared.Ddd.csproj" />
     <ProjectReference Include="..\Webshop.Shared.Infrastructure.Consul\Webshop.Shared.Infrastructure.Consul.csproj" />
+    <ProjectReference Include="..\Webshop.Shared.Infrastructure.DistributedTracing\Webshop.Shared.Infrastructure.DistributedTracing.csproj" />
+    <ProjectReference Include="..\Webshop.Shared.Infrastructure.Swagger\Webshop.Shared.Infrastructure.Swagger.csproj" />
     <ProjectReference Include="..\Webshop.Shared\Webshop.Shared.csproj" />
   </ItemGroup>
 

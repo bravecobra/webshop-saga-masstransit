@@ -11,10 +11,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Webshop.Shared.Infrastructure.Consul;
+using Webshop.Shared.Infrastructure.DistributedTracing;
 using Webshop.Shared.Infrastructure.ErrorHandling;
 using Webshop.Shared.Infrastructure.ErrorHandling.Exceptions;
 using Webshop.Shared.Infrastructure.Swagger;
-using Webshop.Shared.Infrastructure.Versioning;
 using Webshop.Shared.Validation;
 
 namespace Catalog
@@ -59,6 +59,7 @@ namespace Catalog
             //services.AddHttpCacheHeaders();
             services.AddConsulClient(Configuration)
                 .AddConsulSelfRegistration(Configuration);
+            services.AddDistributedTracing(Configuration);
         }
 
         /// <summary>

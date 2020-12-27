@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc.Versioning.Conventions;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Webshop.Shared.Infrastructure.Versioning
+namespace Webshop.Shared.Infrastructure.Swagger
 {
     /// <summary>
     ///     Extensions for the default Farmad implementation api versioning on the <see cref="IServiceCollection" />. 

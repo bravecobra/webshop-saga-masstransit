@@ -3,7 +3,6 @@ version: "3.8"
 services:
   # Infrastructure services
   consul:
-    #container_name: consul
     image: consul:latest
     ports:
         - "8500:8500"
@@ -13,11 +12,7 @@ services:
     volumes:
     - ./deploy/compose/consul/config:/config
     - ./deploy/compose/consul/_data/consul:/data
-    command: 'agent -config-dir=/config -bind ''{{ GetPrivateInterfaces | attr "address" }}'' -client ''{{ GetPrivateInterfaces | attr "address" }}'' -bootstrap'
-    # depends_on:
-    #   - dps
-    # dns:
-    #   - 10.0.0.10
+    command: 'agent -config-dir=/config -data-dir=/data -bind ''{{ GetPrivateInterfaces | attr "address" }}'' -client ''{{ GetPrivateInterfaces | attr "address" }}'' -bootstrap'
   # consul-agent:
   #   image: 'consul:latest'
   #   hostname: consul-agent
@@ -30,7 +25,39 @@ services:
   #     - webshop
   #   depends_on:
   #     - consul
-
+  consul-backup:
+    image: consul_backup:latest
+    container_name: consul-backup
+    build:
+      context: ./src/consul_backup
+      dockerfile: Dockerfile
+    networks:
+      webshop: null
+    depends_on:
+      - consul
+    volumes:
+      - './deploy/compose/_data/consul/backup:/backup/'
+    command: consul-backup
+  vault:
+    image: 'vault:latest'
+    networks:
+      webshop: null
+    depends_on:
+      - consul
+    ports:
+      - '8200:8200'
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - './deploy/compose/vault/config/:/config'
+    command: server -config=/config/vault.hcl
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "6831:6831/udp"
+      - "16686:16686"
+    networks:
+      - webshop
   sqlserverdb:
     image: mcr.microsoft.com/mssql/server:latest
     environment:
@@ -65,6 +92,17 @@ services:
     volumes:
       - rabbitmq:/var/lib/rabbitmq
 
+  fabio:
+    image: 'fabiolb/fabio'
+    ports:
+      - '9999:9999'
+      - '9998:9998'
+    depends_on:
+      - consul
+    volumes:
+      - ./deploy/compose/fabio:/etc/fabio
+    networks:
+      webshop: null
   # dps:
   #   image: defreitas/dns-proxy-server
   #   volumes:
@@ -95,27 +133,29 @@ services:
     build:
       context: ./
       dockerfile: Catalog/Dockerfile
-    #container_name: catalog
-    #hostname: catalog
     deploy:
-      replicas: 2
+      replicas: 1
     environment:
       - CONSUL_HTTP_ADDR=webshop_consul_1:8500
+      - ASPNETCORE_BASEPATH=/catalog
       - ConnectionStrings:CatalogDbContext=Server=sqlserverdb,1433;Database=Catalog;User Id=sa;Password=Password_123;MultipleActiveResultSets=true
       - ServiceDiscovery:Enabled=true
       - ServiceDiscovery:SelfRegistration=true
       - ServiceDiscovery:Datacenter=webshop-dc
       - ServiceDiscovery:ServiceName=Catalog
       - ServiceDiscovery:Port=80
-      - ServiceDiscovery:Tags:0=testing
+      - ServiceDiscovery:Tags:0=urlprefix-/catalog/ strip=/catalog #fabio
+      - ServiceDiscovery:Tags:1=CatalogService
       - ServiceDiscovery:WaitTime=30
+      - DistributedTracing:UseExporter=jaeger
+      - DistributedTracing:Jaeger:ServiceName=Catalog
+      - DistributedTracing:Jaeger:Host=webshop_jaeger_1
+      - DistributedTracing:Jaeger:Port=6831
+      - Swagger:disableHttps=true
     ports:
       - 80
     networks:
-      webshop:
-        # ipv4_address: 10.1.0.100
-    # dns:
-    #   - 10.1.0.10
+      webshop: null
   # catalog-sidecar:
   #   image: 'nicholasjackson/consul-envoy:v1.8.3-v1.14.4'
   #   container_name: catalog-sidecar
@@ -142,9 +182,6 @@ networks:
   webshop:
     name: webshop
     driver: bridge
-    # ipam:
-    #   config:
-    #     - subnet: 10.1.0.0/24
 
 volumes:
   mssql-server-linux-data:

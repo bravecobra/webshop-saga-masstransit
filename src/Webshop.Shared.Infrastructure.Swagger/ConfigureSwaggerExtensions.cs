@@ -34,7 +34,7 @@ namespace Webshop.Shared.Infrastructure.Swagger
                 options.OperationFilter<FileUploadOperation>();
 
                 options.CustomSchemaIds(schema => schema.FullName);
-                options.CustomOperationIds(apiDesc => apiDesc.ActionDescriptor?.AttributeRouteInfo?.Name ??
+                options.CustomOperationIds(apiDesc => apiDesc.ActionDescriptor.AttributeRouteInfo?.Name ??
                                                       (apiDesc.TryGetMethodInfo(out var methodInfo) ? methodInfo.Name : null));
                 options.IncludeXmlComments(XmlCommentsFilePath(assemblyNameForXmlComments));
 
@@ -92,8 +92,9 @@ namespace Webshop.Shared.Infrastructure.Swagger
         }
 
         public static void UseCustomSwagger(this IApplicationBuilder app, IApiVersionDescriptionProvider provider, IConfiguration configuration,
-            string swaggerClientIdKey = "Auth:SwaggerClientId", bool disableHttps = false)
+            string swaggerClientIdKey = "Auth:SwaggerClientId", string swaggerdisableHttpsKey = "Swagger:disableHttps")
         {
+            var disableHttps = configuration.GetValue<bool>(swaggerdisableHttpsKey, false);
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger(options =>
             {
