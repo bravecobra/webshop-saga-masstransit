@@ -13,9 +13,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webshop.Shared.Ddd", "Websh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webshop.Shared.Infrastructure.Consul", "Webshop.Shared.Infrastructure.Consul\Webshop.Shared.Infrastructure.Consul.csproj", "{A046FA87-A66C-4A38-A4F0-195FF825CA0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webshop.Shared.Infrastructure.DistributedTracing", "Webshop.Shared.Infrastructure.DistributedTracing\Webshop.Shared.Infrastructure.DistributedTracing.csproj", "{9A44E045-D200-4713-9424-A53C0BD44744}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webshop.Shared.Infrastructure.DistributedTracing", "Webshop.Shared.Infrastructure.DistributedTracing\Webshop.Shared.Infrastructure.DistributedTracing.csproj", "{9A44E045-D200-4713-9424-A53C0BD44744}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webshop.Shared.Infrastructure.Swagger", "Webshop.Shared.Infrastructure.Swagger\Webshop.Shared.Infrastructure.Swagger.csproj", "{4703D304-5477-4866-B22E-2097AF12E0D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webshop.Shared.Infrastructure.Swagger", "Webshop.Shared.Infrastructure.Swagger\Webshop.Shared.Infrastructure.Swagger.csproj", "{4703D304-5477-4866-B22E-2097AF12E0D2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E73DCAB8-E4A9-4F11-8C86-44D53E1F839A}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
