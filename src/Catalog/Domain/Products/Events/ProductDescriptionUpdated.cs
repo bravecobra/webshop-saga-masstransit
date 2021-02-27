@@ -11,10 +11,10 @@ namespace Catalog.Domain.Products.Events
         /// <summary>
         ///
         /// </summary>
-        public Guid ProductId { get; set; }
+        public Guid ProductId { get; init; }
         /// <summary>
         ///
         /// </summary>
-        public string Description { get; set; }  = null!;
+        public string Description { get; init; }  = null!;
     }
 }

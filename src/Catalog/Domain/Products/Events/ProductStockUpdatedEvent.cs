@@ -11,14 +11,14 @@ namespace Catalog.Domain.Products.Events
         /// <summary>
         /// 
         /// </summary>
-        public Guid ProductId { get; set; }
+        public Guid ProductId { get; init; }
         /// <summary>
         /// 
         /// </summary>
-        public int Amount { get; set; }
+        public int Amount { get; init; }
         /// <summary>
         /// 
         /// </summary>
-        public DateTimeOffset UpdatedOn { get; set; }
+        public DateTimeOffset UpdatedOn { get; init; }
     }
 }

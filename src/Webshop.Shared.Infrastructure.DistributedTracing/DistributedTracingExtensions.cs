@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
 namespace Webshop.Shared.Infrastructure.DistributedTracing
@@ -23,8 +22,9 @@ namespace Webshop.Shared.Infrastructure.DistributedTracing
             switch (exporter)
             {
                 case "jaeger":
-                    services.AddOpenTelemetryTracing((builder) => builder
-                        .SetResource(Resources.CreateServiceResource(configuration.GetValue<string>("DistributedTracing:Jaeger:ServiceName")))
+                    services.AddOpenTelemetryTracing(
+                        (builder) => builder
+                        .AddSource(configuration.GetValue<string>("DistributedTracing:Jaeger:ServiceName"))
                         .AddAspNetCoreInstrumentation()
                         .AddHttpClientInstrumentation(options =>
                         {
@@ -32,12 +32,12 @@ namespace Webshop.Shared.Infrastructure.DistributedTracing
                         })
                         .AddSqlClientInstrumentation(options =>
                         {
-                            options.SetTextCommandContent = true;
+                            options.SetDbStatementForText = true;
                         })
-                        .AddEntityFrameworkCoreInstrumentation(options =>
-                        {
-                            options.SetTextCommandContent = true;
-                        })
+                        // .AddEntityFrameworkCoreInstrumentation(options =>
+                        // {
+                        //     options.SetTextCommandContent = true;
+                        // })
                         
                         .AddJaegerExporter(jaegerOptions =>
                         {

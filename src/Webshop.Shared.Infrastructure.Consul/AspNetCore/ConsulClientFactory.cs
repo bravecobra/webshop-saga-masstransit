@@ -1,4 +1,5 @@
-﻿using Consul;
+﻿using System;
+using Consul;
 using Microsoft.Extensions.Options;
 
 namespace Webshop.Shared.Infrastructure.Consul.AspNetCore
@@ -12,11 +13,13 @@ namespace Webshop.Shared.Infrastructure.Consul.AspNetCore
             _optionsMonitor = optionsMonitor;
         }
 
+        [Obsolete]
         public IConsulClient CreateClient()
         {
             return CreateClient(Options.DefaultName);
         }
 
+        [Obsolete]
         public IConsulClient CreateClient(string name)
         {
             var options = _optionsMonitor.Get(name);

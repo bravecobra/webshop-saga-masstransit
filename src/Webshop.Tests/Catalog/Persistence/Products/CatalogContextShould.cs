@@ -48,16 +48,15 @@ namespace Webshop.Tests.Catalog.Persistence.Products
         {
             //Arrange
             await using var context = Fixture.CreateContext(_outputHelper.ToLoggerFactory());
-            var product = Product.CreateProduct("test");
+            var product = Product.CreateProduct("test2");
             var id = product.Id;
-
             //Act
             await context.Products.AddAsync(product);
             await context.SaveChangesAsync();
 
             //Assert
-            var productlist = context.Products.Where(product1 => product1.Id == id).ToList();
-            Assert.Equal("test", productlist.First().Description);
+            var productlist = context.Products.Where(p => p.Id == id).ToList();
+            Assert.Equal("test2", productlist.First().Description);
         }
     }
 }

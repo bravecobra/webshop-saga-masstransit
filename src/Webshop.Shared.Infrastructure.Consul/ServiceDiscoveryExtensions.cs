@@ -25,7 +25,10 @@ namespace Webshop.Shared.Infrastructure.Consul
             services.AddTransient<IConsulClient, ConsulClient>();
             var settings = new ServiceDiscoverySettings();
             configuration.GetSection("ServiceDiscovery").Bind(settings);
-            if (!settings.SelfRegistration) return services;
+            if (!settings.SelfRegistration)
+            {
+                return services;
+            }
 
             var hostName = Dns.GetHostName(); //returns the Docker ID
             var ip = Dns.GetHostEntry(Dns.GetHostName()).AddressList
@@ -38,13 +41,12 @@ namespace Webshop.Shared.Infrastructure.Consul
                 options.Address = ip;
                 options.Tags = settings.Tags;
                 options.Port = settings.Port;
-                options.Checks = new[]
-                {
+                options.Checks = new[] {
                     //This check lets Consul verify connectivity using the health enpoint at /health
-                    new AgentServiceCheck
-                    {
+                    new AgentServiceCheck {
                         HTTP = $"http://{ip}:{settings.Port}/health",
-                        Interval = TimeSpan.FromSeconds(10)
+                        Interval = TimeSpan.FromSeconds(10),
+                        DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(60)
                     }
                 };
             });
@@ -55,16 +57,20 @@ namespace Webshop.Shared.Infrastructure.Consul
         /// 
         /// </summary>
         /// <param name="services"></param>
+        /// <param name="configuration"></param>
         /// <returns></returns>
         public static IServiceCollection AddConsulClient(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddTransient<IConsulClient, ConsulClient>();
             var settings = new ServiceDiscoverySettings();
             configuration.GetSection("ServiceDiscovery").Bind(settings);
-            if (!settings.Enabled) return services;
+            if (!settings.Enabled)
+            {
+                return services;
+            }
 
             var hostName = Dns.GetHostName();
-            var ip = Dns.GetHostEntry(Dns.GetHostName()).AddressList
+            var ip = Dns.GetHostEntry(hostName).AddressList
                 .FirstOrDefault(x => x.AddressFamily == AddressFamily.InterNetwork)?.ToString();
             services.AddConsul(options =>
             {

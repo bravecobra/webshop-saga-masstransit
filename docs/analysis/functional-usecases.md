@@ -1,5 +1,7 @@
 # Functional UseCases
 
+## Manage Products
+
 1. `Shopowner` creates a `Product` in the `Catalog` (Event: NewProductEntered)  in Products (=MT-Courier Example -> transactional)
     1. Create a new `Product` (Event: NewProductCreated) in `Catalog`
         1. Create a `Price` for the `Product` in Pricing
@@ -13,6 +15,9 @@
    1. Update stockamount (Event: StockAmountUpdated)
         1. (Event: StockAmountUpdated) -> Update `Product`'s availability in catalog
 1. `Customer` browses the `Catalog` viewing products, prices and availability (Query in Products)
+
+## Manage ShoppingCart
+
 1. `Customer` manages the content of a `ShoppingCart`
     1. Add a product and amount to a `ShoppingCart` (Event: ProductAdded)
         1. Create `ShoppingCart` if not exists
@@ -22,6 +27,9 @@
 1. `Customer` reviews `ShoppingCart` details (Query)
     1. Fetch current pricing (optional) (Query in Pricing)
     1. Recheck availability stock (optional) (Query in WareHouse)
+
+## Manage Order
+
 1. `Customer` submits an `SalesTransaction` based of current `ShoppingCart` (Event: ShoppingCartSubmitted) -> MT-Courier
     1. Start new `SalesTransaction` based on submitted `ShoppingCart`
     1. Update pricing of `SalesTransaction` (Event: PriceUpdateRequested) -> IRequest

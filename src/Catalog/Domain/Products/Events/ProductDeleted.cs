@@ -11,6 +11,6 @@ namespace Catalog.Domain.Products.Events
         /// <summary>
         /// 
         /// </summary>
-        public Guid ProductId { get; set; }
+        public Guid ProductId { get; init; }
     }
 }

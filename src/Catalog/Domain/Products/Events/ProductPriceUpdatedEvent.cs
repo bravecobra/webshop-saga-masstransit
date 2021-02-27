@@ -12,15 +12,15 @@ namespace Catalog.Domain.Products.Events
         /// <summary>
         /// 
         /// </summary>
-        public Guid ProductId { get; set; }
+        public Guid ProductId { get; init; }
         /// <summary>
         /// 
         /// </summary>
-        public Price NewPrice { get; set; } = null!;
+        public Price NewPrice { get; init; } = null!;
 
         /// <summary>
         /// 
         /// </summary>
-        public DateTimeOffset UpdatedOn { get; set; }
+        public DateTimeOffset UpdatedOn { get; init; }
     }
 }
