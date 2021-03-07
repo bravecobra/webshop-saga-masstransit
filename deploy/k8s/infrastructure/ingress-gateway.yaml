@@ -1,0 +1,55 @@
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: IngressGateway
+metadata:
+  name: ingress-gateway
+spec:
+  listeners:
+    # - port: 8200
+    #   protocol: http
+    #   services:
+    #     - name: vault
+    #       hosts: [ vault.127.0.0.1.nip.io ]
+    - port: 8080
+      protocol: http
+      services:
+        - name: jaeger-query
+          hosts: [ jaeger.127.0.0.1.nip.io ]
+# ---
+# Vault
+# apiVersion: consul.hashicorp.com/v1alpha1
+# kind: ServiceIntentions
+# metadata:
+#   name: vault
+# spec:
+#   destination:
+#     name: vault
+#   sources:
+#     - name: ingress-gateway
+#       action: allow
+# ---
+# apiVersion: consul.hashicorp.com/v1alpha1
+# kind: ServiceDefaults
+# metadata:
+#   name: vault
+#   namespace: infrastructure
+# spec:
+#   protocol: 'http'
+---
+# Jaeger
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceIntentions
+metadata:
+  name: jaeger-query
+spec:
+  destination:
+    name: jaeger-query
+  sources:
+    - name: ingress-gateway
+      action: allow
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceDefaults
+metadata:
+  name: jaeger-query
+spec:
+  protocol: 'http'

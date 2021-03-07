@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using AutoMapper;
+using Catalog.Configuration;
 using Catalog.Configuration.Services;
 using FluentValidation.AspNetCore;
 using MediatR;
@@ -45,6 +45,7 @@ namespace Catalog
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCompositionRoot();
+            services.Configure<VaultOptions>(Configuration.GetSection("Vault"));
             services.AddCustomApiVersioning();
             services.AddPersistenceLayer(Configuration);
             services.AddAutoMapper(typeof(Startup));

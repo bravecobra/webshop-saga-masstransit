@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "catalog.fullname" . }}
+  labels:
+    {{- include "catalog.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "catalog.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "catalog.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "catalog.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          env:
+            - name: "CONSUL_HTTP_ADDR"
+              value: {{ .Values.catalog.consul.address | quote }}
+            - name: "ASPNETCORE_BASEPATH"
+              value: {{ .Values.catalog.basepath | quote }}
+            - name: "ConnectionStrings__CatalogDbContext"
+              value: {{ .Values.catalog.dbconnection | quote }}
+            - name: "ServiceDiscovery__Enabled"
+              value: "true"
+            - name: "ServiceDiscovery__SelfRegistration"
+              value: "false"
+            - name: "ServiceDiscovery__Datacenter"
+              value: {{ .Values.catalog.consul.datacenter | quote }}
+            - name: "ServiceDiscovery__ServiceName"
+              value: "Catalog"
+            - name: "ServiceDiscovery__Port"
+              value: "80"
+            - name: "ServiceDiscovery__Tags__0"
+              value: "CatalogService"
+            - name: "ServiceDiscovery__Tags__1"
+              value: "urlprefix-/catalog/ strip=/catalog #fabio"
+            - name: "ServiceDiscovery__WaitTime"
+              value: "30"
+            - name: "DistributedTracing__UseExporter"
+              value: {{ .Values.catalog.tracing.exporter | quote }}
+            - name: "DistributedTracing__Jaeger__ServiceName"
+              value: {{ .Values.catalog.tracing.jaeger.name | quote }}
+            - name: "DistributedTracing__Jaeger__Host"
+              value: {{ .Values.catalog.tracing.jaeger.host | quote }}
+            - name: "DistributedTracing__Jaeger__Port"
+              value: {{ .Values.catalog.tracing.jaeger.port | quote }}
+            - name: "Swagger__disableHttps"
+              value: {{ .Values.catalog.swagger.disableHttps | quote }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

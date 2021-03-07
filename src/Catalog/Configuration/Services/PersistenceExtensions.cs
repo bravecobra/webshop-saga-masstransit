@@ -1,4 +1,5 @@
 ﻿using Catalog.Persistence;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +19,18 @@ namespace Catalog.Configuration.Services
         /// <returns></returns>
         public static IServiceCollection AddPersistenceLayer(this IServiceCollection services, IConfiguration configuration)
         {
+            var dbBuilder = new SqlConnectionStringBuilder(
+                configuration.GetConnectionString("Database")
+            );
+
+            if (configuration["database:userID"] != null)
+            {
+                dbBuilder.UserID = configuration["database:userID"];
+                dbBuilder.Password = configuration["database:password"];
+
+                configuration.GetSection("ConnectionStrings")["Database"] = dbBuilder.ConnectionString;
+            }
+
             services.AddDbContext<CatalogDbContext>(options =>
             {
                 options

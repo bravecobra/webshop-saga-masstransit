@@ -18,7 +18,7 @@ namespace Webshop.Tests.Catalog.Persistence.Products
         {
             _outputHelper = outputHelper;
             Fixture = fixture;
-            Fixture.InitializeNewDatabase(@"Server=localhost,1433;Database=CatalogContextShould;User Id=sa;Password=Password_123;ConnectRetryCount=0");
+            Fixture.InitializeNewDatabase(@"Server=127.0.0.1,1433;Database=CatalogContextShould;User Id=sa;Password=8OpFWV3JUg1vMXjFKPTQ;ConnectRetryCount=0");
         }
 
         public SharedCatalogDatabaseFixture Fixture { get; }

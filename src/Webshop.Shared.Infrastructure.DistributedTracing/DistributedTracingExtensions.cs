@@ -23,7 +23,7 @@ namespace Webshop.Shared.Infrastructure.DistributedTracing
             {
                 case "jaeger":
                     services.AddOpenTelemetryTracing(
-                        (builder) => builder
+                        builder => builder
                         .AddSource(configuration.GetValue<string>("DistributedTracing:Jaeger:ServiceName"))
                         .AddAspNetCoreInstrumentation()
                         .AddHttpClientInstrumentation(options =>

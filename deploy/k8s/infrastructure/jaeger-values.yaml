@@ -1,0 +1,12 @@
+# collector:
+#   podAnnotations:
+#       "consul.hashicorp.com/connect-inject": "true"
+agent:
+  podAnnotations:
+      "consul.hashicorp.com/connect-inject": "true"
+# ingester:
+#   podAnnotations:
+#       "consul.hashicorp.com/connect-inject": "true"
+query:
+  podAnnotations:
+      "consul.hashicorp.com/connect-inject": "true"

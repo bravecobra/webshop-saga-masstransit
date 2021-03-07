@@ -403,3 +403,8 @@ MigrationBackup/
 
 site/
 _data/
+.idea/
+.terraform
+deploy/compose/vault/tokens.txt
+deploy/k8s/Catalog-secret-id
+deploy/k8s/Catalog-role-id

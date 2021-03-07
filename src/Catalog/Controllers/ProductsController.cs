@@ -56,7 +56,11 @@ namespace Catalog.Controllers
         {
             var request = new GetProductByIdHandler.GetProductByIdQuery(id);
             var response = await _mediator.Send(request, CancellationToken.None);
-            if (response == null) return NotFound();
+            if (response == null)
+            {
+                return NotFound();
+            }
+
             var result = _mapper.Map<ProductDto>(response);
             return new OkObjectResult(result);
         }

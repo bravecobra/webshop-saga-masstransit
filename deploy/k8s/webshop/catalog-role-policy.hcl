@@ -1,0 +1,3 @@
+path "CatalogDB/*" {
+  capabilities = ["read"]
+}

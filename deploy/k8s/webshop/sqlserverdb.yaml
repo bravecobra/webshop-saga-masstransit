@@ -1,0 +1,7 @@
+acceptEula:
+  value: "Y"
+edition:
+  value: Developer
+pod:
+  annotations:
+    "consul.hashicorp.com/connect-inject": "true"
