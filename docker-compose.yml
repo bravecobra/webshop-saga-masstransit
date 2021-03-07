@@ -11,7 +11,7 @@ services:
       - webshop
     volumes:
     - ./deploy/compose/consul/config:/config
-    - ./deploy/compose/consul/_data/consul:/data
+    - ./deploy/compose/consul/_data:/data
     command: 'agent -config-dir=/config -data-dir=/data -bind ''{{ GetPrivateInterfaces | attr "address" }}'' -client ''{{ GetPrivateInterfaces | attr "address" }}'' -bootstrap'
   # consul-agent:
   #   image: 'consul:latest'
@@ -92,17 +92,6 @@ services:
     volumes:
       - rabbitmq:/var/lib/rabbitmq
 
-  fabio:
-    image: 'fabiolb/fabio'
-    ports:
-      - '9999:9999'
-      - '9998:9998'
-    depends_on:
-      - consul
-    volumes:
-      - ./deploy/compose/fabio:/etc/fabio
-    networks:
-      webshop: null
   # dps:
   #   image: defreitas/dns-proxy-server
   #   volumes:
@@ -144,8 +133,8 @@ services:
       - ServiceDiscovery:Datacenter=webshop-dc
       - ServiceDiscovery:ServiceName=Catalog
       - ServiceDiscovery:Port=80
-      - ServiceDiscovery:Tags:0=urlprefix-/catalog/ strip=/catalog #fabio
-      - ServiceDiscovery:Tags:1=CatalogService
+      - ServiceDiscovery:Tags:0=CatalogService
+      - ServiceDiscovery:Tags:1=urlprefix-/catalog/ strip=/catalog #fabio
       - ServiceDiscovery:WaitTime=30
       - DistributedTracing:UseExporter=jaeger
       - DistributedTracing:Jaeger:ServiceName=Catalog
