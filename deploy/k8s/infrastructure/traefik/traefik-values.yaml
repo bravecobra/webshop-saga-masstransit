@@ -1,0 +1,16 @@
+dashboard:
+  enabled: true
+  domain: traefik.localhost
+
+kubernetes:
+  namespaces:
+    - default
+    - kube-system
+
+consul:
+  enabled: true
+  endpoint: "consul-consul-server:8500"
+  datacenter: webshop
+  watch: true
+  exposedByDefault: true
+  prefix: traefik

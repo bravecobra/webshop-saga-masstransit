@@ -1,0 +1,17 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: "grafana-ingressroute"
+  namespace: prometheus
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`grafana.localhost`) && PathPrefix(`/`)
+      kind: Rule
+      namespace: prometheus
+      services:
+      - name: prometheus-grafana
+        port: 80
+        path: /
+        passHostHeader: true

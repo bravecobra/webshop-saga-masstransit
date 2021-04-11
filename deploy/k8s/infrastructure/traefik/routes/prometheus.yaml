@@ -1,0 +1,17 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: "prometheus-ingressroute"
+  namespace: prometheus
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`prometheus.localhost`) && PathPrefix(`/`)
+      kind: Rule
+      namespace: prometheus
+      services:
+      - name: prometheus-operated
+        port: 9090
+        path: /
+        passHostHeader: true

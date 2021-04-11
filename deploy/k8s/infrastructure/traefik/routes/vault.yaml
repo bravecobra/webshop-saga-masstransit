@@ -1,0 +1,18 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: "vault-ingressroute"
+  namespace: infrastructure
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`vault.localhost`) && PathPrefix(`/`)
+      kind: Rule
+      namespace: infrastructure
+      services:
+      - name: vault-ui
+        port: 8200
+        path: /
+        passHostHeader: true

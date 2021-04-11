@@ -1,10 +1,14 @@
 # Choose an optional name for the datacenter
 global:
   datacenter: webshop
+  acls:
+    manageSytemACLs: true
 
 # Enable the Consul Web UI via a NodePort
 ui:
+  enabled: true
   service:
+    enabled: true
     type: 'NodePort'
 
 # Enable Connect for secure communication between nodes
@@ -15,13 +19,13 @@ controller:
   enabled: true
 
 ingressGateways:
-  enabled: true
-  defaults:
-    replicas: 1 #default = 2, but they cannot be on the same node. there is only one node on docker-desktop
-  gateways:
-    - name: ingress-gateway
-      service:
-        type: LoadBalancer
+  enabled: false
+  # defaults:
+  #   replicas: 1 #default = 2, but they cannot be on the same node. there is only one node on docker-desktop
+  # gateways:
+  #   - name: ingress-gateway
+  #     service:
+  #       type: LoadBalancer
 
 client:
   enabled: true
@@ -33,6 +37,12 @@ server:
   disruptionBudget:
     enabled: true
     maxUnavailable: 0
+  # extraConfig: |
+  #   {
+  #     "ui_config": {
+  #       "content_path": "/consul"
+  #     }
+  #   }
 
 syncCatalog:
   enabled: false

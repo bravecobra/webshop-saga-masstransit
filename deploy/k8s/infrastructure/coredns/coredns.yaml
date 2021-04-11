@@ -5,12 +5,12 @@ metadata:
   namespace: kube-system
 data:
   Corefile: |
-    consul:53 {
-      log
-      errors
-      cache 30
-      forward . 10.110.179.7
-    }
+    # consul:53 {
+    #   log
+    #   errors
+    #   cache 30
+    #   forward . 10.102.249.39
+    # }
     .:53 {
       errors
       health {

@@ -1,0 +1,89 @@
+# ---
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: IngressRoute
+# metadata:
+#   name: "consul-ingressroute"
+#   namespace: infrastructure
+# spec:
+#   entryPoints:
+#     - web
+#   routes:
+#     - match: Host(`infrastructure.localhost`) && PathPrefix(`/consul`)
+#       kind: Rule
+#       namespace: infrastructure
+#       services:
+#       - name: consul-consul-ui
+#         port: 80
+#         path: /
+#         passHostHeader: true
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: "consul-ingressroute"
+  namespace: infrastructure
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`consul.localhost`) && PathPrefix(`/`)
+      kind: Rule
+      namespace: infrastructure
+      services:
+      - name: consul-consul-ui
+        port: 80
+        path: /
+        passHostHeader: true
+# ---
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: IngressRoute
+# metadata:
+#   name: consul-ingressroute
+#   namespace: infrastructure
+# spec:
+#   entryPoints:
+#     - web
+#   routes:
+#     - match: PathPrefix(`/consul`)
+#       kind: Rule
+#       middlewares:
+#       # - name: consul-stripprefix
+#       # - name: consul-add
+#       - name: consul-add-referer
+#       namespace: infrastructure
+#       services:
+#         - name: consul-consul-ui
+#           port: 80
+#           path: /
+#           passHostHeader: true
+# ---
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: Middleware
+# metadata:
+#   name: consul-stripprefix
+#   namespace: infrastructure
+# spec:
+#   stripPrefix:
+#     prefixes:
+#       - /consul
+# ---
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: Middleware
+# metadata:
+#   name: consul
+#   namespace: infrastructure
+# spec:
+#   addPrefix:
+#     prefix: "/consul"
+#     forceSlash: false
+# ---
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: Middleware
+# metadata:
+#   name: consul-add-referer
+#   namespace: infrastructure
+# spec:
+#   headers:
+#     referrerPolicy :
+#       Referer: "http://infrastructure.localhost/consul/.*"

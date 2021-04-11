@@ -4,11 +4,26 @@ theme:
 nav:
     - Home: 'index.md'
     - Analysis:
-         - 'Use cases': 'analysis/functional-usecases.md'
-    #     - 'Tye': 'setup/tye.md'
-    #     - 'Docker-Compose': 'setup/docker-compose.md'
-    #     - 'Kubernetes': 'setup/kubernetes.md'
+      - 'Use cases': 'analysis/functional-usecases.md'
+    - Deployment:
+      - Kubernetes:
+        - Intro: 'deployment/k8s/infrastructure/index.md'
+        - Infrastructure:
+          - Prometheus/Grafana: 'deployment/k8s/infrastructure/prometheus.md'
+          - Traefik: 'deployment/k8s/infrastructure/traefik.md'
+          - Consul: 'deployment/k8s/infrastructure/consul.md'
+          - Vault: 'deployment/k8s/infrastructure/vault.md'
+          - Jaeger: 'deployment/k8s/infrastructure/jaeger.md'
+          - Seq: 'deployment/k8s/infrastructure/seq.md'
+        - Shop:
+          - Application: deployment/k8s/application/index.md
+          - SQLServer: deployment/k8s/application/sqlserver.md
+          - RabbitMQ: deployment/k8s/application/rabbitmq.md
+          - Catalog: deployment/k8s/application/catalog.md
     - About:
         - 'License': 'license.md'
         - 'Release Notes': 'release-notes.md'
-dev_addr: '0.0.0.0:8080'
+dev_addr: '0.0.0.0:8088'
+
+markdown_extensions:
+  - pymdownx.tabbed
