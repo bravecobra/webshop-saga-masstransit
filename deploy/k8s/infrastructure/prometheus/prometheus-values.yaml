@@ -1,2 +1,26 @@
 prometheus-node-exporter:
     hostRootFsMount: false
+
+grafana:
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+      - name: 'myprovider'
+        orgId: 1
+        folder: ''
+        type: file
+        disableDeletion: true
+        editable: false
+        options:
+          path: /var/lib/grafana/dashboards/myprovider
+  dashboards:
+    myprovider:
+      nginx-ingress-controller:
+        datasource: Prometheus
+        gnetId: 11462
+        revision: 1
+  plugins:
+  - grafana-piechart-panel
+  - digrich-bubblechart-panel
+  - grafana-clock-panel

@@ -2,6 +2,9 @@ dashboard:
   enabled: true
   domain: traefik.localhost
 
+additionalArguments:
+  - "--metrics.prometheus=true"
+
 kubernetes:
   namespaces:
     - default
