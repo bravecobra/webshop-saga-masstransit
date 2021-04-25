@@ -28,6 +28,8 @@ kubectl apply -f ./infrastructure/traefik/routes/prometheus.yaml
 
 You can then access it through: [http://prometheus.localhost/](http://prometheus.localhost/)
 
+In order to tell prometheus to reload its configuration, have a look at [https://www.robustperception.io/reloading-prometheus-configuration](https://www.robustperception.io/reloading-prometheus-configuration).
+
 ### Configure Lens (optional)
 
 Use the `Prometheus Operator` config and point it to the installed `prometheus` instance
@@ -60,4 +62,3 @@ You can then access it through: [http://localhost:3000/](http://localhost:3000/)
 
 - [https://linuxblog.xyz/posts/kube-prometheus-stack/](https://linuxblog.xyz/posts/kube-prometheus-stack/)
 - [https://medium.com/platform-engineering/monitoring-traefik-with-grafana-1d037af5b952](https://medium.com/platform-engineering/monitoring-traefik-with-grafana-1d037af5b952)
-

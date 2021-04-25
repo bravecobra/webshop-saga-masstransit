@@ -10,12 +10,12 @@ nav:
         - Intro: 'deployment/k8s/infrastructure/index.md'
         - Infrastructure:
           - Prometheus/Grafana: 'deployment/k8s/infrastructure/prometheus.md'
+          - Jaeger: 'deployment/k8s/infrastructure/jaeger.md'
+          - Seq: 'deployment/k8s/infrastructure/seq.md'
           - Traefik: 'deployment/k8s/infrastructure/traefik.md'
           - Consul: 'deployment/k8s/infrastructure/consul.md'
           - Vault: 'deployment/k8s/infrastructure/vault.md'
-          - Jaeger: 'deployment/k8s/infrastructure/jaeger.md'
-          - Seq: 'deployment/k8s/infrastructure/seq.md'
-        - Shop:
+        - Webshop:
           - Application: deployment/k8s/application/index.md
           - SQLServer: deployment/k8s/application/sqlserver.md
           - RabbitMQ: deployment/k8s/application/rabbitmq.md
