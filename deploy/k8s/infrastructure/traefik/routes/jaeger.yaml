@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: Host(`infrastructure.localhost`) && PathPrefix(`/jaeger`)
+    - match: Host(`jaeger.localhost`) && PathPrefix(`/`)
       kind: Rule
       namespace: infrastructure
       services:

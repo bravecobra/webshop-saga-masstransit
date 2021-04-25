@@ -12,3 +12,9 @@ spec:
     options:
       query:
         base-path: /jaeger
+agent:
+  podAnnotations:
+      "consul.hashicorp.com/connect-inject": "true"
+query:
+  podAnnotations:
+      "consul.hashicorp.com/connect-inject": "true"

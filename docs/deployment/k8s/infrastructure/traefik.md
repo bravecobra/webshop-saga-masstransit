@@ -42,6 +42,25 @@ kubectl apply -f ./infrastructure/prometheus/traefik-monitor.yaml
 
 During the setup of prometheus, we already added the [Traefik dashboard](http://grafana.localhost/d/3ipsWfViz/traefik-2?var-job=traefik-dashboard&var-protocol=http&var-interval=&from=now-3h&to=now) in grafana.
 
+## Hooking up jaeger for tracing
+
+Once [Jaeger](jaeger.md) is installed, we can add tracing to the `traefik` instance.
+
+we do that by passing 3 extra startup arguments:
+
+```powershell
+- "--tracing.jaeger=true"
+- "--tracing.jaeger.samplingServerURL=http://jaeger-agent.infrastructure.svc:5778/sampling"
+- "--tracing.jaeger.localAgentHostPort=jaeger-agent.infrastructure.svc:6831"
+```
+
+and then applying those
+
+```powershell
+helm upgrade traefik traefik/traefik -f ./infrastructure/traefik/traefik-values.yaml
+```
+
 ## References
 
-https://traefik.io/blog/capture-traefik-metrics-for-apps-on-kubernetes-with-prometheus/
+<https://traefik.io/blog/capture-traefik-metrics-for-apps-on-kubernetes-with-prometheus/>
+<https://traefik.io/blog/application-request-tracing-with-traefik-and-jaeger-on-kubernetes/>

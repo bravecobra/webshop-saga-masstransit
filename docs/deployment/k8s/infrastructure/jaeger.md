@@ -14,6 +14,8 @@ To verify
 kubectl get deployment jaeger-operator -n infrastructure
 ```
 
+## Install a jaeger instance with in-memory
+
 Next we install the simplest all-in-one instance of `jaeger` in the `infrastructure` namespace.
 
 ```powershell
@@ -36,4 +38,10 @@ Forward the jaeger instance
 
 ```powershell
 kubectl port-forward service/jaeger-query 8888:16686 --namespace infrastructure
+```
+
+or add it to [Traefik](traefik.md):
+
+```powershell
+kubectl apply -f ./infrastructure/traefik/routes/jaeger.yaml
 ```

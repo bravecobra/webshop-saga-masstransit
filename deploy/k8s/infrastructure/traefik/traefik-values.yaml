@@ -4,6 +4,9 @@ dashboard:
 
 additionalArguments:
   - "--metrics.prometheus=true"
+  - "--tracing.jaeger=true"
+  - "--tracing.jaeger.samplingServerURL=http://jaeger-agent.infrastructure.svc:5778/sampling"
+  - "--tracing.jaeger.localAgentHostPort=jaeger-agent.infrastructure.svc:6831"
 
 kubernetes:
   namespaces:
