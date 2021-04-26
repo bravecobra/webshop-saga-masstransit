@@ -3,6 +3,11 @@
 ## Installing a Consul instance
 
 ```powershell
+helm repo add hashicorp https://helm.releases.hashicorp.com
+helm repo update
+```
+
+```powershell
 helm install consul hashicorp/consul -f infrastructure/consul/consul-values.yaml -n infrastructure
 
 # we'll forward later in traefik automatically for testing purposes

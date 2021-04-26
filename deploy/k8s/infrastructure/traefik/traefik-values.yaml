@@ -8,15 +8,22 @@ additionalArguments:
   - "--tracing.jaeger.samplingServerURL=http://jaeger-agent.infrastructure.svc:5778/sampling"
   - "--tracing.jaeger.localAgentHostPort=jaeger-agent.infrastructure.svc:6831"
 
+log:
+  filePath: "/tmp/traefik-log-file.log"
+  format: json
+  level: DEBUG
+accessLog:
+  filePath: "/tmp/traefik-accesslog-file.log"
+
 kubernetes:
   namespaces:
     - default
     - kube-system
 
-consul:
-  enabled: true
-  endpoint: "consul-consul-server:8500"
-  datacenter: webshop
-  watch: true
-  exposedByDefault: true
-  prefix: traefik
+# consul:
+#   enabled: true
+#   endpoint: "consul-consul-server:8500"
+#   datacenter: webshop
+#   watch: true
+#   exposedByDefault: true
+#   prefix: traefik

@@ -1,5 +1,12 @@
 # Running a Vault instance
 
+## Installing
+
+```powershell
+helm repo add hashicorp https://helm.releases.hashicorp.com
+helm repo update
+```
+
 ```powershell
 helm install -f infrastructure/vault/vault-values.yaml vault hashicorp/vault --namespace=infrastructure
 

@@ -62,3 +62,6 @@ You can then access it through: [http://localhost:3000/](http://localhost:3000/)
 
 - [https://linuxblog.xyz/posts/kube-prometheus-stack/](https://linuxblog.xyz/posts/kube-prometheus-stack/)
 - [https://medium.com/platform-engineering/monitoring-traefik-with-grafana-1d037af5b952](https://medium.com/platform-engineering/monitoring-traefik-with-grafana-1d037af5b952)
+- [https://github.com/prometheus-operator/prometheus-operator/issues/2996](https://github.com/prometheus-operator/prometheus-operator/issues/2996)
+- [https://johnharris.io/2019/03/dynamic-configuration-discovery-in-grafana/](https://johnharris.io/2019/03/dynamic-configuration-discovery-in-grafana/)
+- [https://github.com/prometheus-community/helm-charts/issues/336](https://github.com/prometheus-community/helm-charts/issues/336)

@@ -5,6 +5,11 @@
 Following [the jaeger docs](https://www.jaegertracing.io/docs/1.22/operator/), we install the jaeger operator
 
 ```powershell
+helm repo add jaegertracing https://jaegertracing.github.io/helm-charts
+helm repo update
+```
+
+```powershell
 helm install jaeger-operator jaegertracing/jaeger-operator -n infrastructure
 ```
 
@@ -34,7 +39,7 @@ helm install -f ./infrastructure/jaeger/jaeger-values.yaml jaeger jaegertracing/
 
 > Jaeger alternative: [all-in-one-memory](https://github.com/jaegertracing/jaeger-kubernetes/blob/master/all-in-one/jaeger-all-in-one-template.yml)
 
-Forward the jaeger instance
+## Expose the jaeger instance
 
 ```powershell
 kubectl port-forward service/jaeger-query 8888:16686 --namespace infrastructure

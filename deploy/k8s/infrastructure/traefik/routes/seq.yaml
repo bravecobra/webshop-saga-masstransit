@@ -1,0 +1,17 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: "seq-ingressroute"
+  namespace: infrastructure
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`seq.localhost`) && PathPrefix(`/`)
+      kind: Rule
+      namespace: infrastructure
+      services:
+      - name: seq
+        port: 80
+        path: /
+        passHostHeader: true

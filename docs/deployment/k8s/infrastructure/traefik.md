@@ -4,6 +4,11 @@
 
 To setup traefik, we deploy the helm chart from [https://github.com/traefik/traefik-helm-chart](https://github.com/traefik/traefik-helm-chart):
 
+```powershell
+helm repo add traefik https://helm.traefik.io/traefik
+helm repo update
+```
+
 We'll install it into the `default` namespace.
 
 ```powershell

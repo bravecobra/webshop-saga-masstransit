@@ -49,6 +49,8 @@ helm repo add jaegertracing https://jaegertracing.github.io/helm-charts
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo add traefik https://helm.traefik.io/traefik
+helm repo add datalust https://helm.datalust.co
+helm repo add fluent https://fluent.github.io/helm-charts
 helm repo update
 ```
 
