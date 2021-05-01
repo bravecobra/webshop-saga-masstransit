@@ -18,7 +18,7 @@ grafana:
       provider:
         foldersFromFilesStructure: true
       annotations:
-        k8s-sidecar-target-directory: /tmp/dashboards/kubernetes
+        k8s-sidecar-target-directory: /tmp/dashboards/Infrastructure/Kubernetes
   plugins:
   - grafana-piechart-panel
   - digrich-bubblechart-panel

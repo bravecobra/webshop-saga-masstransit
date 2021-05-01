@@ -6,7 +6,7 @@ metadata:
   labels:
     grafana_dashboard: "1"
   annotations:
-    k8s-sidecar-target-directory: /tmp/dashboards/Tracing
+    k8s-sidecar-target-directory: /tmp/dashboards/Infrastructure
 data:
   jaeger-dashboard.json: "{\r\n    \"annotations\": {\r\n      \"list\": [\r\n        {\r\n
     \         \"builtIn\": 1,\r\n          \"datasource\": \"-- Grafana --\",\r\n

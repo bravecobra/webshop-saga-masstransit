@@ -45,7 +45,19 @@ Now setup the alert manager to alert when there are too many requests through a 
 kubectl apply -f ./infrastructure/prometheus/traefik-monitor.yaml
 ```
 
-During the setup of prometheus, we already added the [Traefik dashboard](http://grafana.localhost/d/3ipsWfViz/traefik-2?var-job=traefik-dashboard&var-protocol=http&var-interval=&from=now-3h&to=now) in grafana.
+Next we add the Traefik dashboard to `Grafana` to display those metrics.
+
+```powershell
+kubectl apply -f ./infrastructure/traefik/traefik-grafana-dashboard.yaml
+```
+
+> This crd was created by generating it from the json file that was fetched from grafana after import it as dashboard `11462`, adding and annotating the CRD.
+>
+> ```powershell
+>kubectl apply configmap traefik-dashboard --from-file=traefik-dashboard.json=./infrastructure/traefik/traefik-grafana-dashboard.json -n infrastructure -o yaml > ./infrastructure/traefik/traefik-grafana-dashboard.yaml
+>kubectl label --overwrite -f ./infrastructure/traefik/traefik-grafana-dashboard.yaml grafana_dashboard=1
+>kubectl annotate --overwrite -f ./infrastructure/traefik/traefik-grafana-dashboard.yaml k8s-sidecar-target-directory=/tmp/dashboards/Infrastructure
+> ```
 
 ## Hooking up jaeger for tracing
 

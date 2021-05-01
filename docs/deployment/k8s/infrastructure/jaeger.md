@@ -78,5 +78,5 @@ kubectl apply -f ./infrastructure/jaeger/jaeger-grafana-dashboard.yaml
 > ```powershell
 >kubectl apply configmap jaeger-dashboard --from-file=jaeger-dashboard.json=./infrastructure/jaeger/jaeger-grafana-dashboard.json -n infrastructure -o yaml > ./infrastructure/jaeger/jaeger-grafana-dashboard.yaml
 >kubectl label --overwrite -f ./infrastructure/jaeger/jaeger-grafana-dashboard.yaml grafana_dashboard=1
->kubectl annotate --overwrite -f ./infrastructure/jaeger/jaeger-grafana-dashboard.yaml k8s-sidecar-target-directory=/tmp/dashboards/Tracing
+>kubectl annotate --overwrite -f ./infrastructure/jaeger/jaeger-grafana-dashboard.yaml k8s-sidecar-target-directory=/tmp/dashboards/Infrastructure
 > ```

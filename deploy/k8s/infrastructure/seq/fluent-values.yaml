@@ -30,7 +30,7 @@ dashboards:
   enabled: true
   labelKey: grafana_dashboard
   annotations:
-    k8s-sidecar-target-directory: /tmp/dashboards/Logging
+    k8s-sidecar-target-directory: /tmp/dashboards/Infrastructure
 config:
   inputs: |
     [INPUT]

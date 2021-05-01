@@ -36,8 +36,6 @@ Use the `Prometheus Operator` config and point it to the installed `prometheus` 
 
 ![Prometheus Lens Settings](../../../images/prometheus-lens.png)
 
-### Grafana
-
 ### Through Traefik
 
 If traefik is already deployed ([here](./traefik.md)), then expose grafana through

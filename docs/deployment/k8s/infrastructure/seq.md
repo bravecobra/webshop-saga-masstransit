@@ -30,7 +30,7 @@ Fluent-bit will monitor all the pods logs and forward them to `seq`. Fluent-bit 
 helm install -f .\infrastructure\seq\fluent-values.yaml fluent-bit fluent/fluent-bit --namespace=infrastructure
 ```
 
-It also adds a dashboard to [Grafana](prometheus.md) installed with the `prometheus-operator`.
+It also adds a dashboard to [Grafana](prometheus.md) installed with the `prometheus-operator` in the `Infrastructure` folder in `grafana`.
 
 ## References
 
