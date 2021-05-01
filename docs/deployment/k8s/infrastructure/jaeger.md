@@ -39,7 +39,7 @@ helm install -f ./infrastructure/jaeger/jaeger-values.yaml jaeger jaegertracing/
 
 > Jaeger alternative: [all-in-one-memory](https://github.com/jaegertracing/jaeger-kubernetes/blob/master/all-in-one/jaeger-all-in-one-template.yml)
 
-## Expose the jaeger instance
+## Expose the jaeger instance UI
 
 ```powershell
 kubectl port-forward service/jaeger-query 8888:16686 --namespace infrastructure
@@ -50,3 +50,33 @@ or add it to [Traefik](traefik.md):
 ```powershell
 kubectl apply -f ./infrastructure/traefik/routes/jaeger.yaml
 ```
+
+## Hooking up with prometheus
+
+First expose the admin port as a `k8s` service
+
+```powershell
+kubectl apply -f ./infrastructure/jaeger/jaeger-admin-service.yaml
+```
+
+Next let `Prometheus` monitor that service
+
+```powershell
+kubectl apply -f ./infrastructure/prometheus/jaeger-monitor.yaml
+```
+
+We should see `Prometheus` getting the metrics now.
+
+Next we add the jaeger dashboard to `Grafana` to display those metrics.
+
+```powershell
+kubectl apply -f ./infrastructure/jaeger/jaeger-grafana-dashboard.yaml
+```
+
+> This crd was created by generating it from the json file that was fetched from grafama after import it as dashboard `10001`, adding  and annotating the CRD.
+>
+> ```powershell
+>kubectl apply configmap jaeger-dashboard --from-file=jaeger-dashboard.json=./infrastructure/jaeger/jaeger-dashboard.json -n infrastructure -o yaml > ./infrastructure/jaeger/jaeger-grafana-dashboard.yaml
+>kubectl label --overwrite -f ./infrastructure/jaeger/jaeger-grafana-dashboard.yaml grafana_dashboard=1
+>kubectl annotate --overwrite -f ./infrastructure/jaeger/jaeger-grafana-dashboard.yaml k8s-sidecar-target-directory=/tmp/dashboards/Jaeger
+> ```
