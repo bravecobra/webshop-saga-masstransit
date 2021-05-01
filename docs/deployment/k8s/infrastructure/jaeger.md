@@ -76,7 +76,7 @@ kubectl apply -f ./infrastructure/jaeger/jaeger-grafana-dashboard.yaml
 > This crd was created by generating it from the json file that was fetched from grafama after import it as dashboard `10001`, adding  and annotating the CRD.
 >
 > ```powershell
->kubectl apply configmap jaeger-dashboard --from-file=jaeger-dashboard.json=./infrastructure/jaeger/jaeger-dashboard.json -n infrastructure -o yaml > ./infrastructure/jaeger/jaeger-grafana-dashboard.yaml
+>kubectl apply configmap jaeger-dashboard --from-file=jaeger-dashboard.json=./infrastructure/jaeger/jaeger-grafana-dashboard.json -n infrastructure -o yaml > ./infrastructure/jaeger/jaeger-grafana-dashboard.yaml
 >kubectl label --overwrite -f ./infrastructure/jaeger/jaeger-grafana-dashboard.yaml grafana_dashboard=1
->kubectl annotate --overwrite -f ./infrastructure/jaeger/jaeger-grafana-dashboard.yaml k8s-sidecar-target-directory=/tmp/dashboards/Jaeger
+>kubectl annotate --overwrite -f ./infrastructure/jaeger/jaeger-grafana-dashboard.yaml k8s-sidecar-target-directory=/tmp/dashboards/Tracing
 > ```
