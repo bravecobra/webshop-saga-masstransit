@@ -42,7 +42,11 @@ namespace Webshop.Tests.Catalog.Persistence
         {
             lock (Lock)
             {
-                if (_databaseInitialized) return;
+                if (_databaseInitialized)
+                {
+                    return;
+                }
+
                 using (var context = CreateContext())
                 {
                     context.Database.EnsureDeleted();
@@ -53,6 +57,9 @@ namespace Webshop.Tests.Catalog.Persistence
             }
         }
 
-        public void Dispose() => Connection.Dispose();
+        public void Dispose()
+        {
+            Connection?.Dispose();
+        }
     }
 }

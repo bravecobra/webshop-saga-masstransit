@@ -18,14 +18,14 @@ namespace Webshop.Tests.Catalog.Persistence.Products
         {
             _outputHelper = outputHelper;
             Fixture = fixture;
-            Fixture.InitializeNewDatabase(@"Server=127.0.0.1,1433;Database=CatalogContextShould;User Id=sa;Password=8OpFWV3JUg1vMXjFKPTQ;ConnectRetryCount=0");
         }
 
         public SharedCatalogDatabaseFixture Fixture { get; }
 
-        [Fact]
+        [Fact(Skip = "integrationtest")]
         public async Task AddAProductToTheDatabase()
         {
+            Fixture.InitializeNewDatabase(@"Server=127.0.0.1,1433;Database=CatalogContextShould;User Id=sa;Password=8OpFWV3JUg1vMXjFKPTQ;ConnectRetryCount=0");
             //Arrange
             await using var context = Fixture.CreateContext(_outputHelper.ToLoggerFactory());
             var product = Product.CreateProduct("test");
@@ -43,9 +43,10 @@ namespace Webshop.Tests.Catalog.Persistence.Products
             Assert.Equal("test", productlist.First().Description);
         }
 
-        [Fact]
+        [Fact(Skip = "integrationtest")]
         public async Task AddAProductToTheDatabase2()
         {
+            Fixture.InitializeNewDatabase(@"Server=127.0.0.1,1433;Database=CatalogContextShould;User Id=sa;Password=8OpFWV3JUg1vMXjFKPTQ;ConnectRetryCount=0");
             //Arrange
             await using var context = Fixture.CreateContext(_outputHelper.ToLoggerFactory());
             var product = Product.CreateProduct("test2");
