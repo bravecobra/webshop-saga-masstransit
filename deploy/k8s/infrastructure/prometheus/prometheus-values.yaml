@@ -13,6 +13,7 @@ prometheus:
       annotations:
         "consul.hashicorp.com/connect-inject": 'true'
         "consul.hashicorp.com/connect-service": "prometheus-kube-prometheus-prometheus"
+        "consul.hashicorp.com/transparent-proxy": "true"
 
 grafana:
   defaultDashboardsEnabled: true
