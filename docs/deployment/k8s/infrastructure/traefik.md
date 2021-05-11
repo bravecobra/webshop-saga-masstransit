@@ -11,6 +11,14 @@ helm repo update
 
 We'll install it into the `default` namespace.
 
+Generate the default certificate secret from the self-signed certificate generated in the [Intro](./index.md):
+
+```powershell
+kubectl create secret tls traefik-cert --cert=./infrastructure/certs/k8s.local.crt --key=./infrastructure/certs/k8s.local.key
+```
+
+> TODO: can we deploy it to it's own namespace and still serve any ingress of the cluster
+
 ```powershell
 helm install traefik traefik/traefik -f ./infrastructure/traefik/traefik-values.yaml
 ```
@@ -21,7 +29,7 @@ To expose the dashboard
 kubectl apply -f ./infrastructure/traefik/routes/dashboard.yaml
 ```
 
-It should now be accessible through [http://traefik.localhost/dashboard](http://traefik.localhost/dashboard)
+It should now be accessible through [https://traefik.infrastructure.k8s.local/dashboard](https://traefik.infrastructure.k8s.local/dashboard)
 
 ## Hooking up prometheus
 

@@ -5,9 +5,9 @@ metadata:
   namespace: infrastructure
 spec:
   entryPoints:
-    - web
+    - websecure
   routes:
-    - match: Host(`jaeger.localhost`) && PathPrefix(`/`)
+    - match: Host(`jaeger.infrastructure.k8s.local`) && PathPrefix(`/`)
       kind: Rule
       namespace: infrastructure
       services:
@@ -15,3 +15,6 @@ spec:
         port: 16686
         path: /
         passHostHeader: true
+        tls:
+          - secretName: traefik-cert
+

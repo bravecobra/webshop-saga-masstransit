@@ -1,6 +1,6 @@
 dashboard:
   enabled: true
-  domain: traefik.localhost
+  domain: traefik.infrastructure.k8s.local
 
 deployment:
   podAnnotations:
@@ -25,10 +25,24 @@ kubernetes:
   namespaces:
     - default
     - kube-system
-ssl:
-  enabled: false
-  insecureSkipVerify: true
-  upstream: true
+
+ports:
+  websecure:
+    tls:
+      enabled: true
+
+volumes:
+  - name: traefik-cert
+    mountPath: "/certs"
+    type: secret
+
+tls:
+  stores:
+    default:
+      defaultCertificate:
+        certFile: /certs/tls.crt
+        keyFile: /certs/tls.key
+
 # consul:
 #   enabled: true
 #   endpoint: "consul-consul-server:8500"

@@ -26,7 +26,7 @@ If traefik is already deployed ([here](./traefik.md)), then add a IngressRoute a
 kubectl apply -f ./infrastructure/traefik/routes/prometheus.yaml
 ```
 
-You can then access it through: [http://prometheus.localhost/](http://prometheus.localhost/)
+You can then access it through: [https://prometheus.infrastructure.k8s.local/](https://prometheus.infrastructure.k8s.local/)
 
 In order to tell prometheus to reload its configuration, have a look at [https://www.robustperception.io/reloading-prometheus-configuration](https://www.robustperception.io/reloading-prometheus-configuration).
 
@@ -44,7 +44,7 @@ If traefik is already deployed ([here](./traefik.md)), then expose grafana throu
 kubectl apply -f ./infrastructure/traefik/routes/grafana.yaml
 ```
 
-You can then access it through: [http://grafana.localhost/](http://grafana.localhost/)
+You can then access it through: [https://grafana.infrastructure.k8s.local/](https://grafana.infrastructure.k8s.local/)
 
 ### Through port-forward
 

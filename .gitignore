@@ -408,3 +408,4 @@ _data/
 deploy/compose/vault/tokens.txt
 deploy/k8s/Catalog-secret-id
 deploy/k8s/Catalog-role-id
+certs/

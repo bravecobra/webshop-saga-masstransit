@@ -5,9 +5,9 @@ metadata:
   namespace: prometheus
 spec:
   entryPoints:
-    - web
+    - websecure
   routes:
-    - match: Host(`prometheus.localhost`) && PathPrefix(`/`)
+    - match: Host(`prometheus.infrastructure.k8s.local`) && PathPrefix(`/`)
       kind: Rule
       namespace: prometheus
       services:
@@ -15,3 +15,5 @@ spec:
         port: 9090
         path: /
         passHostHeader: true
+        tls:
+          - secretName: traefik-cert

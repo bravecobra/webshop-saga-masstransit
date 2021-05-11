@@ -8,15 +8,15 @@ podAnnotations:
 catalog:
   basepath: ""
   consul:
-    address: "hashicorp-consul-server-0.service.webshop.consul:8500"
-    datacenter: "webshop"
+    address: "consul-consul-server.service.datacenter1.consul:8500"
+    datacenter: "datacenter1"
   dbconnection: "Server=127.0.0.1,1433;Database=Catalog;User Id=sa;Password=8OpFWV3JUg1vMXjFKPTQ;MultipleActiveResultSets=true"
   tracing:
     exporter: "jaeger"
     jaeger:
       name: "catalog"
       # no way to specify UDP in Consul Connect at the moment...connecting directly instead
-      host: "jaeger-agent.service.webshop.consul"
+      host: "jaeger-agent.service.datacenter1.consul"
       port: 6831
   swagger:
     disableHttps: true

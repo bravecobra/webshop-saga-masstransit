@@ -5,9 +5,9 @@ metadata:
   namespace: prometheus
 spec:
   entryPoints:
-    - web
+    - websecure
   routes:
-    - match: Host(`grafana.localhost`) && PathPrefix(`/`)
+    - match: Host(`grafana.infrastructure.k8s.local`) && PathPrefix(`/`)
       kind: Rule
       namespace: prometheus
       services:
@@ -15,3 +15,5 @@ spec:
         port: 80
         path: /
         passHostHeader: true
+        tls:
+          - secretName: traefik-cert

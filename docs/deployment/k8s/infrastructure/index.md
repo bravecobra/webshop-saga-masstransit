@@ -20,6 +20,17 @@ I use the docker desktop version with these settings:
 
 ![Kubernetes Settings](../../../images/docker-kubernetes-settings.png)
 
+## Self-signed Certificates
+
+We use self-signed certificates instead of LetsEncrypt as that would require either a proper DNS or an accessible HTTP endpoint. Neither might be an option, so we'll go with the self-signed for now. We could extend it further later on.
+
+To generate the certficates for `k8s.local` and `*.k8s.local`, use mkcert.
+
+```powershell
+mkcert -cert-file k8s.local.crt -key-file k8s.local.key k8s.local *.k8s.local infrastructure.k8s.local *.infrastructure.k8s.local
+mkcert -pkcs12 k8s.local.pfx k8s.local *.k8s.local *.k8s.local infrastructure.k8s.local *.infrastructure.k8s.local
+```
+
 ## Helm Charts
 
 Install Helm on your host:
