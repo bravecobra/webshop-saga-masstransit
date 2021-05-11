@@ -7,6 +7,13 @@ kubeApiServer:
     serverName: kubernetes
     insecureSkipVerify: true
 
+prometheus:
+  prometheusSpec:
+    podMetadata:
+      annotations:
+        "consul.hashicorp.com/connect-inject": 'true'
+        "consul.hashicorp.com/connect-service": "prometheus-kube-prometheus-prometheus"
+
 grafana:
   defaultDashboardsEnabled: true
   sidecar:

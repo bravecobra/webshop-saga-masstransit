@@ -62,6 +62,12 @@ Now we deploy the controlplane part being consul, vault and jaeger
 kubectl apply -f infrastructure/namespace.yaml
 ```
 
+### CNI Plugin
+
+```powershell
+kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+```
+
 ### Lens (optional)
 
 There is a handy kubernetes UI that I use all the time calles [Lens](https://k8slens.dev/).
@@ -73,7 +79,6 @@ Make sure you can connect to your k8s cluster and/or have an IDE like [Lens](htt
 To create a (optional) topology map of your cluster use weave's [scope](https://www.weave.works/oss/scope/).
 
 ```powershell
-kubectl create namespace weave
 kubectl create -f 'https://cloud.weave.works/launch/k8s/weavescope.yaml' --namespace=weave
 kubectl port-forward service/weave-scope-app 4040:80 --namespace weave
 ```

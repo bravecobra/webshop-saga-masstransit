@@ -32,9 +32,11 @@ spec:
       namespace: infrastructure
       services:
       - name: consul-consul-ui
-        port: 80
+        port: 443
         path: /
-        passHostHeader: true
+        #passHostHeader: true
+        tls: {}
+
 # ---
 # apiVersion: traefik.containo.us/v1alpha1
 # kind: IngressRoute

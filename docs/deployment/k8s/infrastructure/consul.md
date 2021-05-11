@@ -11,8 +11,22 @@ helm repo update
 helm install consul hashicorp/consul -f infrastructure/consul/consul-values.yaml -n infrastructure
 
 # we'll forward later in traefik automatically for testing purposes
-kubectl port-forward service/consul-consul-server 8500:8500 --namespace infrastructure
+kubectl port-forward service/consul-consul-server 8501:8501 --namespace infrastructure
 ```
+
+or add it to [Traefik](traefik.md):
+
+```powershell
+kubectl apply -f ./infrastructure/traefik/routes/consul.yaml
+```
+
+Grab the bootstrap ACL token and use it to login into the ACL tab of the UI.
+
+```powershell
+kubectl get secrets/consul-consul-bootstrap-acl-token -n infrastructure --template={{.data.token}} | base64 -d
+```
+
+Since we run consul with TLS enabled, the certificate that consul generated is self-signed, so you need to pass the browser check.
 
 To upgrade with new values:
 

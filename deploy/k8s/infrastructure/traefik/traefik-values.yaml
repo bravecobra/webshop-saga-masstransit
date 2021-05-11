@@ -2,28 +2,36 @@ dashboard:
   enabled: true
   domain: traefik.localhost
 
+deployment:
+  podAnnotations:
+    "consul.hashicorp.com/connect-inject": "true"
+    "consul.hashicorp.com/connect-service-port": "8000"
 additionalArguments:
   - "--metrics.prometheus=true"
   - "--tracing.jaeger=true"
   - "--tracing.jaeger.samplingServerURL=http://jaeger-agent.infrastructure.svc:5778/sampling"
   - "--tracing.jaeger.localAgentHostPort=jaeger-agent.infrastructure.svc:6831"
+  - "--serversTransport.insecureSkipVerify=true"
 
 log:
-  filePath: "/tmp/traefik-log-file.log"
+  filePath: "traefik-log-file.log"
   format: json
   level: DEBUG
 accessLog:
-  filePath: "/tmp/traefik-accesslog-file.log"
+  filePath: "traefik-accesslog-file.log"
 
 kubernetes:
   namespaces:
     - default
     - kube-system
-
+ssl:
+  enabled: false
+  insecureSkipVerify: true
+  upstream: true
 # consul:
 #   enabled: true
 #   endpoint: "consul-consul-server:8500"
-#   datacenter: webshop
+#   datacenter: datacenter1
 #   watch: true
 #   exposedByDefault: true
 #   prefix: traefik
