@@ -39,8 +39,3 @@ kubectl create configmap loki-monitor-dashboard --from-file=loki-monitor-dashboa
 kubectl label --overwrite -f ./infrastructure/loki/loki-monitor-dashboard.yaml grafana_dashboard=1
 kubectl annotate --overwrite -f ./infrastructure/loki/loki-monitor-dashboard.yaml k8s-sidecar-target-directory=/tmp/dashboards/Infrastructure
 ```
-
-13865
-Import dashboard:
-  Loki Logs with quicksearch: 13359, 12019
-  Traefik with loki: 13713
