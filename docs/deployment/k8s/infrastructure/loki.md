@@ -9,6 +9,9 @@ helm upgrade --install loki --namespace=infrastructure grafana/loki -f ./infrast
 helm upgrade --install promtail --namespace=infrastructure grafana/promtail -f ./infrastructure/loki/promtail-values.yaml
 ```
 
+The default values for Loki can be found at [github](https://github.com/grafana/helm-charts/blob/main/charts/loki/values.yaml)
+The default values for Promtail can be found at [github](https://github.com/grafana/helm-charts/blob/main/charts/promtail/values.yaml)
+
 Loki should also be available as a service in consul, so we can start sending logs from applications (like Serilog).
 
 We also added `Loki` as an additional dataSource in `Grafana`, when installing [Prometheus](./prometheus.md)
