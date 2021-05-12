@@ -24,7 +24,7 @@ I use the docker desktop version with these settings:
 
 We use self-signed certificates instead of LetsEncrypt as that would require either a proper DNS or an accessible HTTP endpoint. Neither might be an option, so we'll go with the self-signed for now. We could extend it further later on.
 
-To generate the certficates for `k8s.local` and `*.k8s.local`, use mkcert.
+To generate the certficates for `k8s.local` and `*.k8s.local`, use [mkcert](https://github.com/FiloSottile/mkcert) which you can install easily with `choco install mkcert`.
 
 ```powershell
 mkcert -cert-file k8s.local.crt -key-file k8s.local.key k8s.local *.k8s.local infrastructure.k8s.local *.infrastructure.k8s.local
@@ -73,15 +73,21 @@ Now we deploy the controlplane part being consul, vault and jaeger
 kubectl apply -f infrastructure/namespace.yaml
 ```
 
-### CNI Plugin
+<!-- ### CNI Plugin
 
 ```powershell
 kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
-```
+``` -->
 
-### Lens (optional)
+### Kubernetes GUIs
 
-There is a handy kubernetes UI that I use all the time calles [Lens](https://k8slens.dev/).
+#### Lens (optional)
+
+There is a handy kubernetes UI that I use all the time called [Lens](https://k8slens.dev/).
+
+#### Octant (optional)
+
+Another GUI for kubernetes is [Octant](https://octant.dev/).
 
 ### Getting insight (optional)
 

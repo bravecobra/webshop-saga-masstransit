@@ -17,6 +17,12 @@ Generate the default certificate secret from the self-signed certificate generat
 kubectl create secret tls traefik-cert --cert=./infrastructure/certs/k8s.local.crt --key=./infrastructure/certs/k8s.local.key
 ```
 
+We add a TLSStore to replace the default certificate
+
+```powershell
+kubectl apply -f .\infrastructure\traefik\certs.yaml
+```
+
 > TODO: can we deploy it to it's own namespace and still serve any ingress of the cluster
 
 ```powershell
