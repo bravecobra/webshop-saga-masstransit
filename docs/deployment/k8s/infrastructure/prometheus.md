@@ -1,0 +1,65 @@
+# Prometheus
+
+## Installing
+
+We'll install `prometheus` using the `prometheus operator`.
+
+First setup the `helm` repo
+
+```powershell
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+```
+
+Next create the namespace and install the `kube-prometheus-stack` into it
+
+```powershell
+kubectl create namespace prometheus
+helm install prometheus prometheus-community/kube-prometheus-stack --namespace prometheus -f .\infrastructure\prometheus\prometheus-values.yaml
+```
+
+The full values can be found at [https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml](https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml).
+
+If traefik is already deployed ([here](./traefik.md)), then add a IngressRoute and expose `prometheus ui` through
+
+```powershell
+kubectl apply -f ./infrastructure/traefik/routes/prometheus.yaml
+```
+
+You can then access it through: [https://prometheus.infrastructure.k8s.local/](https://prometheus.infrastructure.k8s.local/)
+
+In order to tell prometheus to reload its configuration, have a look at [https://www.robustperception.io/reloading-prometheus-configuration](https://www.robustperception.io/reloading-prometheus-configuration).
+
+### Configure Lens (optional)
+
+Use the `Prometheus Operator` config and point it to the installed `prometheus` instance
+
+![Prometheus Lens Settings](../../../images/prometheus-lens.png)
+
+### Through Traefik
+
+If traefik is already deployed ([here](./traefik.md)), then expose grafana through
+
+```powershell
+kubectl apply -f ./infrastructure/traefik/routes/grafana.yaml
+```
+
+You can then access it through: [https://grafana.infrastructure.k8s.local/](https://grafana.infrastructure.k8s.local/)
+
+### Through port-forward
+
+To expose the UI of `grafana` directly, use:
+
+```powershell
+kubectl port-forward -n service/prometheus-grafana 3000:80 --namespace prometheus
+```
+
+You can then access it through: [http://localhost:3000/](http://localhost:3000/)
+
+### References
+
+- [https://linuxblog.xyz/posts/kube-prometheus-stack/](https://linuxblog.xyz/posts/kube-prometheus-stack/)
+- [https://medium.com/platform-engineering/monitoring-traefik-with-grafana-1d037af5b952](https://medium.com/platform-engineering/monitoring-traefik-with-grafana-1d037af5b952)
+- [https://github.com/prometheus-operator/prometheus-operator/issues/2996](https://github.com/prometheus-operator/prometheus-operator/issues/2996)
+- [https://johnharris.io/2019/03/dynamic-configuration-discovery-in-grafana/](https://johnharris.io/2019/03/dynamic-configuration-discovery-in-grafana/)
+- [https://github.com/prometheus-community/helm-charts/issues/336](https://github.com/prometheus-community/helm-charts/issues/336)

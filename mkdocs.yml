@@ -1,0 +1,36 @@
+site_name: Webshop
+theme:
+  name: material
+nav:
+    - Home: 'index.md'
+    - Analysis:
+      - 'Use cases': 'analysis/functional-usecases.md'
+    - Deployment:
+      - Kubernetes:
+        - Intro: 'deployment/k8s/infrastructure/index.md'
+        - Infrastructure:
+          - Routing:
+            - Traefik: 'deployment/k8s/infrastructure/traefik.md'
+          - Metrics:
+            - Prometheus/Grafana: 'deployment/k8s/infrastructure/prometheus.md'
+          - Tracing:
+            - Jaeger: 'deployment/k8s/infrastructure/jaeger.md'
+          - Logging:
+            - Seq: 'deployment/k8s/infrastructure/seq.md'
+            - Loki: 'deployment/k8s/infrastructure/loki.md'
+          - Service Discovery:
+            - Consul: 'deployment/k8s/infrastructure/consul.md'
+          - Secret Management:
+            - Vault: 'deployment/k8s/infrastructure/vault.md'
+        - Webshop:
+          - Application: deployment/k8s/application/index.md
+          - SQLServer: deployment/k8s/application/sqlserver.md
+          - RabbitMQ: deployment/k8s/application/rabbitmq.md
+          - Catalog: deployment/k8s/application/catalog.md
+    - About:
+        - 'License': 'license.md'
+        - 'Release Notes': 'release-notes.md'
+dev_addr: '0.0.0.0:8088'
+
+markdown_extensions:
+  - pymdownx.tabbed
