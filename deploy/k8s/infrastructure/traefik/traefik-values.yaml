@@ -23,6 +23,12 @@ accessLog:
   filePath: "/var/log/traefik-accesslog-file.log"
   format: json
 
+logs:
+  access:
+    enabled: true
+  general:
+    level: INFO
+
 kubernetes:
   namespaces:
     - default
