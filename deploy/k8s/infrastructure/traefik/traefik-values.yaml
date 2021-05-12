@@ -15,11 +15,13 @@ additionalArguments:
   - "--serversTransport.insecureSkipVerify=true"
 
 log:
-  filePath: "traefik-log-file.log"
+  filePath: "/var/log/traefik-log-file.log"
   format: json
   level: DEBUG
+
 accessLog:
-  filePath: "traefik-accesslog-file.log"
+  filePath: "/var/log/traefik-accesslog-file.log"
+  format: json
 
 kubernetes:
   namespaces:

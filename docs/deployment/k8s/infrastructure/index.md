@@ -62,6 +62,7 @@ helm repo add prometheus-community https://prometheus-community.github.io/helm-c
 helm repo add traefik https://helm.traefik.io/traefik
 helm repo add datalust https://helm.datalust.co
 helm repo add fluent https://fluent.github.io/helm-charts
+helm repo add grafana https://grafana.github.io/helm-charts
 helm repo update
 ```
 

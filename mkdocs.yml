@@ -9,12 +9,19 @@ nav:
       - Kubernetes:
         - Intro: 'deployment/k8s/infrastructure/index.md'
         - Infrastructure:
-          - Traefik: 'deployment/k8s/infrastructure/traefik.md'
-          - Prometheus/Grafana: 'deployment/k8s/infrastructure/prometheus.md'
-          - Jaeger: 'deployment/k8s/infrastructure/jaeger.md'
-          - Seq: 'deployment/k8s/infrastructure/seq.md'
-          - Consul: 'deployment/k8s/infrastructure/consul.md'
-          - Vault: 'deployment/k8s/infrastructure/vault.md'
+          - Routing:
+            - Traefik: 'deployment/k8s/infrastructure/traefik.md'
+          - Metrics:
+            - Prometheus/Grafana: 'deployment/k8s/infrastructure/prometheus.md'
+          - Tracing:
+            - Jaeger: 'deployment/k8s/infrastructure/jaeger.md'
+          - Logging:
+            - Seq: 'deployment/k8s/infrastructure/seq.md'
+            - Loki: 'deployment/k8s/infrastructure/loki.md'
+          - Service Discovery:
+            - Consul: 'deployment/k8s/infrastructure/consul.md'
+          - Secret Management:
+            - Vault: 'deployment/k8s/infrastructure/vault.md'
         - Webshop:
           - Application: deployment/k8s/application/index.md
           - SQLServer: deployment/k8s/application/sqlserver.md

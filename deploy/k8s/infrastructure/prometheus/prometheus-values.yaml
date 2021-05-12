@@ -27,6 +27,13 @@ grafana:
         foldersFromFilesStructure: true
       annotations:
         k8s-sidecar-target-directory: /tmp/dashboards/Infrastructure/Kubernetes
+  additionalDataSources:
+    - name: Loki
+      access: proxy
+      orgId: 1
+      type: loki
+      url: http://loki.infrastructure.svc.cluster.local:3100
+      version: 1
   plugins:
   - grafana-piechart-panel
   - digrich-bubblechart-panel
